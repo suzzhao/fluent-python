@@ -1,0 +1,4 @@
+Not(a) = Not(a And a)
+       = (a Nand a)
+(a Nand b) = Not(a And b) 
+(a And b) = Not(a Nand b)
