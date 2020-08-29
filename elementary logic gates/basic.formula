@@ -1,4 +1,14 @@
-Not(a) = Not(a And a)
-       = (a Nand a)
-(a Nand b) = Not(a And b) 
-(a And b) = Not(a Nand b)
+Not gate:
+       Not(a) = Not(a And a)
+              = (a Nand a)
+
+And gate:
+       # (a Nand b) = Not(a And b) 
+       (a And b) = Not(a Nand b)
+
+Or gate:
+       a Or b = Not(Not(a Or b))
+              = Not(Not(a) And Not(b))
+
+              
+       
