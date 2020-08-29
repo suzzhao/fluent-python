@@ -1,5 +1,5 @@
 CHIP Not {
-    IN a, b;
+    IN a;
     OUT out;
 
     PARTS:
