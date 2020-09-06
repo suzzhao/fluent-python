@@ -9,7 +9,14 @@
  *       b if sel == 01
  *       c if sel == 10
  *       d if sel == 11
+ *  从上述可以发现 sel 的第二位决定了是 ab 还是 cd
+ *  如果是 sel[1] 是 0 就是结果只能是 ab 中的一个
+ *  同理， sel[1] 是 1 就是结果只能是 cd 中的一个
+ *  所以我们可以先通过 sel[0] 做两次选择， 从 ab 中选一个，再从cd中选一个
+ *  然后再根据sel[1] 选出真正的数
+ *  Note：sel取索引从右边开始。
  */
+
 
 CHIP Mux4Way16 {
     IN a[16], b[16], c[16], d[16], sel[2];
@@ -17,4 +24,8 @@ CHIP Mux4Way16 {
 
     PARTS:
     // Put your code here:
+    Mux16 (a=a, b=b, sel=sel[0], out=ab);
+    Mux16 (a=c, b=d, sel=sel[0], out=cd);
+
+    Mux16 (a=ab, b=cd, sel=sel[1], out=out);
 }
