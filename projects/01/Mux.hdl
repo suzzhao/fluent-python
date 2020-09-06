@@ -2,6 +2,8 @@
  * Chip name: Mux Inputs: Outputs:
  * a, b, sel out
  * Function: If sel=0 then out=a else out=b.
+ * out = a if sel = 0
+       = b else
  */
 
 CHIP Mux {
