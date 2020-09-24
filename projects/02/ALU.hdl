@@ -69,7 +69,6 @@ CHIP ALU {
     // zr
     Or16Way (in=o3, out=zr1);
     Not (in=zr1, out=zr);
-    // Or16 (a=zr1, b=false, out=zr);
 
     // ng
     SubBus (in=o3, out=ng);
