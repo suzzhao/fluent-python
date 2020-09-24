@@ -16,8 +16,8 @@
 
 // Implementation: the ALU logic manipulates the x and y inputs
 // and operates on the resulting values, as follows:
-// if (zx == 1) set x = 0        // 16-bit constant
-// if (nx == 1) set x = !x       // bitwise not
+// if (zx == 1) set x = 0        // 16-bit constant  
+// if (nx == 1) set x = !x       // bitwise not   逐位 not
 // if (zy == 1) set y = 0        // 16-bit constant
 // if (ny == 1) set y = !y       // bitwise not
 // if (f == 1)  set out = x + y  // integer 2's complement addition
@@ -42,5 +42,35 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
+    // Put you code here:
+    // zx
+    Mux16 (a=x, b=false, sel=zx, out=x1);
+
+    // nx
+    Not16 (in=x1, out=notx1);
+    Mux16 (a=x1, b=notx1, sel=nx, out=x2);
+
+    // zy
+    Mux16 (a=y, b=false, sel=zy, out=y1);
+
+    // ny
+    Not16 (in=y1, out=noty1);
+    Mux16 (a=y1, b=noty1, sel=ny, out=y2);
+    
+    // f
+    And16 (a=x2, b=y2, out=res1);
+    Add16 (a=x2, b=y2, out=res2);
+    Mux16 (a=res1, b=res2, sel=f, out=res3);
+
+    // no
+    Not16 (in=res3, out=notres3);
+    Mux16 (a=res3, b=notres3, sel=no, out=o3, out=out);
+
+    // zr
+    Or16Way (in=o3, out=zr1);
+    Not (in=zr1, out=zr);
+    // Or16 (a=zr1, b=false, out=zr);
+
+    // ng
+    SubBus (in=o3, out=ng);
 }
