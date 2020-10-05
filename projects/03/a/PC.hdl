@@ -11,10 +11,39 @@
  * else                    out[t+1] = out[t]
  */
 
+
+// ANSWER 1
 CHIP PC {
     IN in[16],load,inc,reset;
     OUT out[16];
 
     PARTS:
     // Put your code here:
+    Mux16 (a=preOut, b=incOut, sel=inc, out=m1);
+    Mux16 (a=m1, b=in, sel=load, out=m2);
+    Mux16 (a=m2, b=false, sel=reset, out=m3);
+    Register (in=m3, load=true, out=preOut, out=out);
+
+    Inc16 (in=preOut, out=incOut);
+}
+
+
+
+// ANSWER 2: that's to say, I can put Inc16 chip at the top or bottom.
+CHIP PC {
+    IN in[16],load,inc,reset;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+
+    // this Register will affect the last line Register's last_time_input
+    // if write this line, next Register will use last last time cycle input(上上个时间周期)
+    // Register (in=in, load=true, out=out1);  // wrong
+    Inc16 (in=preOut, out=incOut);
+
+    Mux16 (a=preOut, b=incOut, sel=inc, out=m1);
+    Mux16 (a=m1, b=in, sel=load, out=m2);
+    Mux16 (a=m2, b=false, sel=reset, out=m3);
+    Register (in=m3, load=true, out=preOut, out=out);
 }
