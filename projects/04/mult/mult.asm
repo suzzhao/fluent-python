@@ -25,7 +25,7 @@
     @END
     D;JEQ
     @R1
-    M = M - 1
+    M = M - 1     // or M = D - 1; translated different line of hack file
 
     @R0
     D = M
