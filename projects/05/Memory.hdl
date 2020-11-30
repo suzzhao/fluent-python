@@ -28,4 +28,11 @@ CHIP Memory {
 
     PARTS:
     // Put your code here:
+    RAM16K (in=in, load=load, address=[0..13], out=o1);
+    Screen (in=in, load=load, address=[2..14], out=o2);
+    Keyboard (out=o3);
+    Xor (a=110000000000000, b=address, out=flag);
+    Mux16(a=o3, b=o2, sel=flag, out=op1);
+    Mux16(a=o1, b=op1, sel=address[14], out=out);
+
 }
