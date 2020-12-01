@@ -40,5 +40,10 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
-    // test
+    ALU (x=o1, y=o4, zx=, nx=, zy=, ny=false, f=false, no=, out=o1, out=outM);
+    
+    Mux16 (a=instruction, b=o1, sel=, out=o2);
+    Register (in=o2, load=, out=o3, out=addressM);
+    Mux16 (a=o3, b=inM, sel=, out=o4);
+    PC (in=o3, load=, inc=, reset=reset, out=pc);
 }
